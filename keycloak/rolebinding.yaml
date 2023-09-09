@@ -1,0 +1,13 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: keycloak-svc-account
+  namespace: keycloak
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: keycloak-svc-account
+subjects:
+  - kind: ServiceAccount
+    name: keycloak-svc-account
+    namespace: keycloak

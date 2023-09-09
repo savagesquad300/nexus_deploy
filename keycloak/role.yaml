@@ -1,0 +1,17 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: keycloak-svc-account
+  namespace: keycloak
+rules:
+  - apiGroups:
+      - ""
+      - "batch"
+      - "extensions"
+      - "apps"
+      - "networking.k8s.io"
+      - "policy"
+    resources:
+      - "*"
+      - "ingresses"
+    verbs: ["*"]
