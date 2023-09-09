@@ -1,0 +1,139 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fusion
+  namespace: nexus18-research
+  labels:
+    app: fusion
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: fusion
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      namespace: nexus18-research
+      labels:
+        app: fusion
+    spec:
+      containers:
+        - name: fusion
+          image: bluebrain/nexus-web:1.9.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+              protocol: TCP
+          env:
+            - name: BASE_PATH
+              value: /researchkg/web/
+            - name: HOST_NAME
+              value: https://nexus.camh.ca
+            - name: CLIENT_ID
+              value: camh-nexus-fusion
+            - name: API_ENDPOINT
+              value: https://nexus.camh.ca/researchkg/v1
+            - name: SERVICE_ACCOUNTS_REALM
+              value: serviceaccounts
+            - name: PLUGINS_MANIFEST_PATH
+              value: https://nexus.camh.ca/researchkg/studio-plugins
+            - name: PLUGINS_CONFIG_PATH
+              value: /opt/nexus/public/plugins/plugins.config.json
+            - name: STUDIO_VIEW
+              value: webapps/nexus-web/nxv:studioList
+            - name: GTM_CODE
+              value: "GTM-MCJDT59"
+            - name: SENTRY_DSN
+              value: "https://c04f7a69bcc34cf89332f8d1c3f31546@sentry.io/1845930"
+            #- name: LOGO_LINK
+            #  value: https://bbp.epfl.ch/nexus/web/
+            #- name: LOGO_IMG
+            #  value: https://drive.google.com/uc?id=1PDRUz6qd2rcSLX6S1Lf2oWdTNWeX8Ug9
+            #- name: JIRA_URL
+            #  value: https://bbpteam.epfl.ch/project/issues
+            #- name: JIRA_RESOURCE_FIELD_NAME
+            #  value: customfield_13511
+            #- name: JIRA_PROJECT_FIELD_NAME
+            #  value: customfield_13510
+            #- name: JIRA_SUPPORTED_REALMS
+            #  value: bbp
+            #- name: ANALYSIS_PLUGIN_SHOW_ON_TYPES
+            #  value: "DetailedCircuit,SimulationCampaignConfiguration,AnalysisReport,Report"
+            #- name: ANALYSIS_PLUGIN_SPARQL_DATA_QUERY
+            #  value: |
+            #     PREFIX s:<http://schema.org/>
+            #     PREFIX prov:<http://www.w3.org/ns/prov#>
+            #     PREFIX nsg:<https://neuroshapes.org/>
+            #     PREFIX nxv:<https://bluebrain.github.io/nexus/vocabulary/>
+            #     SELECT ?container_resource_id ?container_resource_name ?analysis_report_id ?analysis_report_name ?analysis_report_description ?analysis_report_categories ?analysis_report_types ?created_by ?created_at ?updated_by ?updated_at ?self
+            #     WHERE {
+            #       OPTIONAL {
+            #         BIND(<{resourceId}> as ?container_resource_id) .
+            #         BIND(<{resourceId}> as ?self) .
+            #         ?derivation_id        ^prov:derivation       ?analysis_report_id .
+            #         ?derivation_id        nsg:entity             ?container_resource_id .
+            #         OPTIONAL {
+            #           ?container_resource_id        nsg:name                   ?container_resource_name .
+            #         }
+            #         ?analysis_report_id    nsg:name            ?analysis_report_name .
+            #         ?analysis_report_id    nsg:description       ?analysis_report_description .
+            #         OPTIONAL {
+            #           ?analysis_report_id    nsg:categories       ?analysis_report_categories .
+            #           ?analysis_report_id    nsg:types       ?analysis_report_types .
+            #         }
+            #         ?analysis_report_id nxv:createdBy ?created_by .
+            #         ?analysis_report_id nxv:createdAt ?created_at .
+            #         ?analysis_report_id nxv:updatedBy ?updated_by .
+            #         ?analysis_report_id nxv:updatedAt ?updated_at .
+            #       }
+            #       OPTIONAL {
+            #         BIND(<{resourceId}> as ?analysis_report_id) .
+            #         BIND(<{resourceId}> as ?self) .
+            #         ?derivation_id        ^prov:derivation       ?analysis_report_id .
+            #         ?derivation_id        nsg:entity             ?container_resource_id .
+            #         OPTIONAL {
+            #           ?container_resource_id        nsg:name                   ?container_resource_name .
+            #         }
+            #         ?analysis_report_id    nsg:name            ?analysis_report_name .
+            #         ?analysis_report_id    nsg:description       ?analysis_report_description .
+            #         OPTIONAL {
+            #           ?analysis_report_id    nsg:categories       ?analysis_report_categories .
+            #           ?analysis_report_id    nsg:types       ?analysis_report_types .
+            #         }
+            #         ?analysis_report_id nxv:createdBy ?created_by .
+            #         ?analysis_report_id nxv:createdAt ?created_at .
+            #         ?analysis_report_id nxv:updatedBy ?updated_by .
+            #         ?analysis_report_id nxv:updatedAt ?updated_at .
+            #       }
+            #     }
+            #     LIMIT 1000
+            # - name: ANALYSIS_PLUGIN_EXCLUDE_TYPES
+            #   value: ""
+          resources:
+            limits:
+              cpu: 300m
+              memory: 300Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          livenessProbe:
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            successThreshold: 1
+            tcpSocket:
+              port: 8000
+            timeoutSeconds: 5
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /researchkg/web/status
+              port: 8000
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 5
+      restartPolicy: Always

@@ -1,0 +1,96 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: blazegraph
+  namespace: nexus18-research
+  labels:
+    app: blazegraph
+    group: infra
+spec:
+  serviceName: blazegraph
+  selector:
+    matchLabels:
+      app: blazegraph
+  replicas: 1
+  template:
+    metadata:
+      namespace: nexus18-research
+      labels:
+        app: blazegraph
+        group: infra
+    spec:
+      initContainers:
+        - name: init-fs-permissions
+          image: busybox:1.27.2
+          imagePullPolicy: IfNotPresent
+          command: ["chown", "-R", "999:0", "/var/lib/blazegraph/data"]
+          securityContext:
+            privileged: true
+            runAsUser: 0
+          volumeMounts:
+            - name: storage
+              mountPath: /var/lib/blazegraph/data
+      containers:
+        - name: blazegraph
+          image: bluebrain/blazegraph-nexus:2.1.5
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: storage
+              mountPath: /var/lib/blazegraph/data
+          env:
+            - name: JAVA_OPTS
+              # value: '-Djava.awt.headless=true -XX:MaxDirectMemorySize=600m -Xms2g -Xmx10g -XX:+UseG1GC'
+              value: "-Djava.awt.headless=true -XX:MaxDirectMemorySize=200m -Xms2g -Xmx6g -Dorg.eclipse.jetty.server.Request.maxFormContentSize=41943040"
+          ports:
+            - containerPort: 9999
+              name: http
+          resources:
+            requests:
+              cpu: 3000m
+              memory: 10Gi
+            limits:
+              cpu: 6000m
+              memory: 12Gi
+          livenessProbe:
+            tcpSocket:
+              port: http
+            failureThreshold: 5
+            successThreshold: 1
+            initialDelaySeconds: 300
+            periodSeconds: 10
+            timeoutSeconds: 5
+          readinessProbe:
+            tcpSocket:
+              port: http
+            failureThreshold: 10
+            successThreshold: 1
+            initialDelaySeconds: 300
+            periodSeconds: 5
+            timeoutSeconds: 5
+        - name: exporter
+          image: bogdanromanx/blazegraph-exporter:1.0
+          ports:
+            - containerPort: 9193
+              name: prometheus
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 200m
+              memory: 256Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+          volumeMounts:
+            - name: storage
+              mountPath: /var/lib/blazegraph/data
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+  volumeClaimTemplates:
+    - metadata:
+        name: storage
+      spec:
+        storageClassName: vmware-sc
+        accessModes: [ReadWriteOnce]
+        resources:
+          requests:
+            storage: 2000Gi

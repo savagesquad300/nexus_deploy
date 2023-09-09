@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: delta
+  namespace: nexus18-research
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 2048m
+spec:
+  tls:
+    - hosts:
+        - nexus.camh.ca
+      secretName: wc.camh.ca
+  rules:
+    - host: nexus.camh.ca
+      http:
+        paths:
+          - path: /researchkg/v1
+            pathType: Prefix
+            backend:
+              service:
+                name: delta
+                port:
+                  number: 80

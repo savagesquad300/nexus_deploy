@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fusion
+  namespace: nexus18-research
+spec:
+  tls:
+    - hosts:
+        - nexus.camh.ca
+      secretName: wc.camh.ca
+  rules:
+    - host: nexus.camh.ca
+      http:
+        paths:
+          - path: /researchkg/web/
+            pathType: Prefix
+            backend:
+              service:
+                name: fusion
+                port:
+                  number: 80

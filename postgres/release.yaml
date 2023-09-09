@@ -1,0 +1,59 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: postgresql
+  namespace: nexus18-research
+spec:
+  releaseName: postgresql
+  serviceAccountName: nexus-svc-account
+  chart:
+    spec:
+      chart: postgresql
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami
+        namespace: nexus18-research
+      version: 12.5.6
+  interval: 1h0m0s
+  install:
+    remediation:
+      retries: 3
+  # Default values
+  #  https://github.com/bitnami/charts/blob/master/bitnami/postgresql/values.yaml
+  values:
+    global:
+      storageClass: "vmware-sc"
+      postgresql:
+        auth:
+          postgresPassword: ""
+          username: "admin"
+          password: ""
+          database: ""
+          existingSecret: "postgres"
+          secretKeys:
+            adminPasswordKey: "postgres-password"
+            userPasswordKey: "password"
+            replicationPasswordKey: "replication-password"
+    clusterDomain: camh-prod
+    primary:
+      name: primary
+      persistence:
+        enabled: true
+        storageClass: "vmware-sc"
+        accessModes:
+          - ReadWriteOnce
+        size: 500Gi
+    readReplicas:
+      name: read
+      replicaCount: 1
+      persistence:
+        enabled: true
+        mountPath: /bitnami/postgresql
+        storageClass: "vmware-sc"
+        accessModes:
+          - ReadWriteOnce
+        size: 500Gi
+    serviceAccount:
+      create: false
+      name: "nexus-svc-account"
+      automountServiceAccountToken: true

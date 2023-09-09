@@ -1,0 +1,1096 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: delta-search-config
+  namespace: nexus18-research
+data:
+  fields.json: |-
+    {
+      "fields": [
+        {
+          "array": false,
+          "fields": [
+            {
+              "name": "identifier",
+              "format": [
+                "uri"
+              ],
+              "optional": false
+            },
+            {
+              "name": "label",
+              "format": [
+                "keyword",
+                "text"
+              ],
+              "optional": false
+            }
+          ],
+          "label": "Project",
+          "name": "project",
+          "filterable": true,
+          "optional": false,
+          "sortable": true
+        },
+        {
+          "array": true,
+          "format": [
+            "uri"
+          ],
+          "label": "Types",
+          "name": "@type",
+          "filterable": true,
+          "optional": false,
+          "sortable": true
+        },
+        {
+          "array": false,
+          "format": [
+            "keyword",
+            "text"
+          ],
+          "label": "Name",
+          "name": "name",
+          "filterable": false,
+          "optional": true,
+          "sortable": true
+        },
+        {
+          "array": false,
+          "format": [
+            "text"
+          ],
+          "label": "Description",
+          "name": "description",
+          "filterable": false,
+          "optional": true,
+          "sortable": false
+        },
+        {
+          "array": false,
+          "fields": [
+            {
+              "name": "identifier",
+              "format": [
+                "uri"
+              ],
+              "optional": false
+            },
+            {
+              "name": "label",
+              "format": [
+                "keyword",
+                "text"
+              ],
+              "optional": true
+            }
+          ],
+          "label": "Brain Region",
+          "name": "brainRegion",
+          "filterable": true,
+          "optional": true,
+          "sortable": true
+        },
+        {
+          "array": false,
+          "fields": [
+            {
+              "name": "identifier",
+              "format": [
+                "uri"
+              ],
+              "optional": false
+            },
+            {
+              "name": "label",
+              "format": [
+                "keyword",
+                "text"
+              ],
+              "optional": true
+            }
+          ],
+          "label": "Subject Species",
+          "name": "subjectSpecies",
+          "filterable": true,
+          "optional": true,
+          "sortable": true
+        },
+        {
+          "array": true,
+          "fields": [
+            {
+              "format": [
+                "uri"
+              ],
+              "name": "identifier",
+              "optional": false
+            },
+            {
+              "name": "label",
+              "format": [
+                "keyword",
+                "text"
+              ],
+              "optional": true
+            }
+          ],
+          "label": "Contributors",
+          "name": "contributors",
+          "filterable": true,
+          "optional": true,
+          "sortable": true
+        },
+        {
+          "array": true,
+          "fields": [
+            {
+              "name": "identifier",
+              "format": [
+                "uri"
+              ],
+              "optional": false
+            },
+            {
+              "name": "label",
+              "format": [
+                "keyword",
+                "text"
+              ],
+              "optional": true
+            }
+          ],
+          "label": "Organizations",
+          "name": "organizations",
+          "filterable": true,
+          "optional": true,
+          "sortable": true
+        },
+        {
+          "array": false,
+          "fields": [
+            {
+              "name": "identifier",
+              "format": [
+                "uri"
+              ],
+              "optional": false
+            },
+            {
+              "name": "label",
+              "format": [
+                "keyword",
+                "text"
+              ],
+              "optional": true
+            }
+          ],
+          "label": "License",
+          "name": "license",
+          "filterable": true,
+          "optional": true,
+          "sortable": true
+        },
+        {
+          "array": true,
+          "fields": [
+            {
+              "name": "identifier",
+              "format": [
+                "uri"
+              ],
+              "optional": false
+            },
+            {
+              "name": "label",
+              "format": [
+                "keyword",
+                "text"
+              ],
+              "optional": true
+            }
+          ],
+          "label": "M-Type",
+          "name": "mType",
+          "filterable": true,
+          "optional": true,
+          "sortable": true
+        },
+        {
+          "array": true,
+          "fields": [
+            {
+              "name": "identifier",
+              "format": [
+                "uri"
+              ],
+              "optional": false
+            },
+            {
+              "name": "label",
+              "format": [
+                "keyword",
+                "text"
+              ],
+              "optional": true
+            }
+          ],
+          "label": "E-Type",
+          "name": "eType",
+          "filterable": true,
+          "optional": true,
+          "sortable": true
+        },
+        {
+          "array": false,
+          "fields": [
+            {
+              "name": "value",
+              "format": [
+                "number"
+              ],
+              "optional": false
+            },
+            {
+              "name": "label",
+              "format": [
+                "keyword",
+                "text"
+              ],
+              "optional": false
+            },
+            {
+              "name": "unit",
+              "format": [
+                "keyword"
+              ],
+              "optional": false
+            }
+          ],
+          "label": "Subject Age",
+          "name": "subjectAge",
+          "filterable": true,
+          "optional": true,
+          "sortable": true
+        },
+        {
+          "array": false,
+          "fields": [
+            {
+              "name": "value",
+              "format": [
+                "number"
+              ],
+              "optional": false
+            },
+            {
+              "name": "label",
+              "format": [
+                "keyword",
+                "text"
+              ],
+              "optional": true
+            },
+            {
+              "name": "unit",
+              "format": [
+                "keyword"
+              ],
+              "optional": false
+            },
+            {
+              "name": "nValue",
+              "format": [
+                "number"
+              ],
+              "optional": false
+            }
+          ],
+          "label": "Neuron Density",
+          "name": "neuronDensity",
+          "filterable": true,
+          "optional": true,
+          "sortable": true
+        },
+        {
+          "array": false,
+          "fields": [
+            {
+              "name": "value",
+              "format": [
+                "number"
+              ],
+              "optional": false
+            },
+            {
+              "name": "label",
+              "format": [
+                "keyword",
+                "text"
+              ],
+              "optional": true
+            },
+            {
+              "name": "unit",
+              "format": [
+                "keyword"
+              ],
+              "optional": false
+            },
+            {
+              "name": "nValue",
+              "format": [
+                "number"
+              ],
+              "optional": false
+            }
+          ],
+          "label": "Layer Thickness",
+          "name": "layerThickness",
+          "filterable": true,
+          "optional": true,
+          "sortable": true
+        },
+        {
+          "array": false,
+          "fields": [
+            {
+              "name": "value",
+              "format": [
+                "number"
+              ],
+              "optional": false
+            },
+            {
+              "name": "label",
+              "format": [
+                "keyword",
+                "text"
+              ],
+              "optional": true
+            },
+            {
+              "name": "unit",
+              "format": [
+                "keyword"
+              ],
+              "optional": false
+            }
+          ],
+          "label": "Bouton Density",
+          "name": "boutonDensity",
+          "filterable": true,
+          "optional": true,
+          "sortable": true
+        },
+        {
+          "array": false,
+          "format": [
+            "keyword",
+            "text"
+          ],
+          "label": "Circuit Type",
+          "name": "circuitType",
+          "filterable": true,
+          "optional": true,
+          "sortable": true
+        },
+        {
+          "array": false,
+          "format": [
+            "uri"
+          ],
+          "label": "Circuit Base",
+          "name": "circuitBase",
+          "filterable": true,
+          "optional": true,
+          "sortable": true
+        },
+        {
+          "array": false,
+          "format": [
+            "uri"
+          ],
+          "label": "Circuit Config",
+          "name": "circuitConfigPath",
+          "filterable": true,
+          "optional": true,
+          "sortable": true
+        },
+        {
+          "array": false,
+          "label": "Created At",
+          "name": "createdAt",
+          "format": [
+            "date"
+          ],
+          "filterable": true,
+          "optional": false,
+          "sortable": true
+        },
+        {
+          "array": false,
+          "label": "Created By",
+          "name": "createdBy",
+          "format": [
+            "uri"
+          ],
+          "filterable": true,
+          "optional": false,
+          "sortable": true
+        },
+        {
+          "array": false,
+          "label": "Last Modified",
+          "name": "updatedAt",
+          "format": [
+            "date"
+          ],
+          "filterable": true,
+          "optional": false,
+          "sortable": true
+        },
+        {
+          "array": false,
+          "label": "Last Modified By",
+          "name": "updatedBy",
+          "format": [
+            "uri"
+          ],
+          "filterable": true,
+          "optional": false,
+          "sortable": true
+        }
+      ],
+      "layouts": [
+        {
+          "name": "MINDS",
+          "visibleFields": [
+            "project",
+            "@type",
+            "name",
+            "description",
+            "brainRegion",
+            "subjectSpecies",
+            "license"
+          ]
+        },
+        {
+          "name": "Neuron Morphology",
+          "visibleFields": [
+            "project",
+            "name",
+            "description",
+            "brainRegion",
+            "mType",
+            "subjectSpecies"
+          ],
+          "filters": [
+            {
+              "field": "@type",
+              "values": [
+                "https://neuroshapes.org/NeuronMorphology"
+              ],
+              "operator": "and"
+            }
+          ],
+          "sort": [
+            {
+              "field": "updatedAt",
+              "order": "desc"
+            }
+          ]
+        },
+        {
+          "name": "Neuron Electrophysiology",
+          "visibleFields": [
+            "project",
+            "name",
+            "description",
+            "brainRegion",
+            "eType",
+            "subjectSpecies",
+            "subjectAge"
+          ],
+          "filters": [
+            {
+              "field": "@type",
+              "values": [
+                "https://neuroshapes.org/Trace"
+              ],
+              "operator": "and"
+            }
+          ],
+          "sort": [
+            {
+              "field": "brainRegion",
+              "order": "asc"
+            },
+            {
+              "field": "updatedAt",
+              "order": "asc"
+            }
+          ]
+        },
+        {
+          "name": "Layer Anatomy",
+          "visibleFields": [
+            "project",
+            "description",
+            "brainRegion",
+            "layerThickness",
+            "subjectSpecies",
+            "subjectAge"
+          ],
+          "filters": [
+            {
+              "field": "@type",
+              "values": [
+                "https://neuroshapes.org/LayerThickness"
+              ],
+              "operator": "and"
+            }
+          ]
+        },
+        {
+          "name": "Neuron Density",
+          "visibleFields": [
+            "project",
+            "description",
+            "brainRegion",
+            "neuronDensity",
+            "subjectSpecies",
+            "subjectAge"
+          ],
+          "filters": [
+            {
+              "field": "@type",
+              "values": [
+                "https://neuroshapes.org/NeuronDensity"
+              ],
+              "operator": "and"
+            }
+          ]
+        },
+        {
+          "name": "Bouton Density",
+          "visibleFields": [
+            "project",
+            "description",
+            "brainRegion",
+            "boutonDensity",
+            "subjectSpecies",
+            "subjectAge"
+          ],
+          "filters": [
+            {
+              "field": "@type",
+              "values": [
+                "https://neuroshapes.org/BoutonDensity"
+              ],
+              "operator": "and"
+            }
+          ]
+        },
+        {
+          "name": "Circuit",
+          "visibleFields": [
+            "project",
+            "description",
+            "brainRegion",
+            "circuitType",
+            "circuitBase",
+            "circuitConfigPath",
+            "subjectSpecies",
+            "subjectAge"
+          ],
+          "filters": [
+            {
+              "field": "@type",
+              "values": [
+                "https://neuroshapes.org/DetailedCircuit"
+              ],
+              "operator": "and"
+            }
+          ]
+        }
+      ]
+    }
+  search-context.json: |-
+    {
+      "@vocab": "https://bluebrain.github.io/nexus/field/",
+      "identifier": {
+        "@type": "@id"
+      },
+      "contributors": {
+        "@container": "@set"
+      },
+      "organizations": {
+        "@container": "@set"
+      },
+      "project": {
+        "@type": "@id"
+      },
+      "createdAt": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+      },
+      "createdBy": {
+        "@type": "@id"
+      },
+      "updatedAt": {
+        "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+      },
+      "updatedBy": {
+        "@type": "@id"
+      },
+      "_self": {
+        "@type": "@id",
+        "@id": "https://bluebrain.github.io/nexus/field/self"
+      }
+    }
+  mapping.json: |-
+    {
+      "dynamic_templates": [
+        {
+          "strings": {
+            "match_mapping_type": "string",
+            "mapping": {
+              "type": "text",
+              "analyzer": "nexus",
+              "search_analyzer": "search_nexus",
+              "fields": {
+                "keyword": {
+                  "type": "keyword"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "properties": {
+        "description": {
+          "type": "text",
+          "analyzer": "nexus",
+          "search_analyzer": "search_nexus"
+        },
+        "distribution": {
+          "properties": {
+            "contentSize": {
+              "type": "long"
+            }
+          }
+        },
+        "createdAt": {
+          "type": "date"
+        },
+        "updatedAt": {
+          "type": "date"
+        }
+      }
+    }
+  settings.json: |-
+    {
+      "analysis": {
+        "analyzer": {
+          "search_nexus": {
+            "type": "custom",
+            "tokenizer": "classic",
+            "filter": [
+              "trim",
+              "lowercase",
+              "word_delimiter_nexus"
+            ]
+          },
+          "nexus": {
+            "type": "custom",
+            "tokenizer": "edge_ngram_nexus",
+            "filter": [
+              "lowercase",
+              "trim"
+            ]
+          }
+        },
+        "tokenizer": {
+          "edge_ngram_nexus": {
+            "type": "edge_ngram",
+            "min_gram": 2,
+            "max_gram": 36,
+            "token_chars": [
+              "letter",
+              "digit",
+              "custom"
+            ],
+            "custom_token_chars": "-"
+          }
+        },
+        "filter": {
+          "word_delimiter_nexus": {
+            "type": "word_delimiter_graph",
+            "split_on_numerics": false,
+            "preserve_original": true
+          }
+        }
+      },
+      "index": {
+        "number_of_shards": 1
+      }
+    }
+  construct-query.sparql: |-
+    prefix prov: <http://www.w3.org/ns/prov#>
+    prefix nsg: <https://neuroshapes.org/>
+    prefix skos: <http://www.w3.org/2004/02/skos/core#>
+    prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    prefix schema: <http://schema.org/>
+    prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+    prefix nxv: <https://bluebrain.github.io/nexus/vocabulary/>
+    prefix : <https://bluebrain.github.io/nexus/field/>
+
+    CONSTRUCT {
+      ?id  a                   ?type                  ;
+           :name               ?name                  ;
+           :description        ?description           ;
+           :createdAt          ?createdAt             ;
+           :createdBy          ?createdBy             ;
+           :updatedAt          ?updatedAt             ;
+           :updatedBy          ?updatedBy             ;
+           :deprecated         ?deprecated               ;
+           :self               ?self                  ;
+           :brainRegion        ?brainRegionBN         .
+                               ?brainRegionBN         :identifier  ?brainRegionId    ;
+                                                      :label       ?brainRegionLabel .
+      ?id  :project            ?projectBN             .
+                               ?projectBN             :identifier  ?projectId    ;
+                                                      :label       ?projectLabel .
+      ?id  :subjectSpecies     ?speciesBN             .
+                               ?speciesBN             :identifier  ?speciesId    ;
+                                                      :label       ?speciesLabel .
+      ?id  :distribution       ?distributionBN           .
+                               ?distributionBN           :label          ?distributionName  ;
+                                                         :encodingFormat ?distributionEncodingFormat ;
+                                                         :contentSize    ?distributionContentSize .
+      ?id  :contributors       ?personBN              .
+                               ?personBN              :identifier  ?personId     ;
+                                                      :label       ?personName   .
+      ?id  :organizations      ?orgBN                 .
+                               ?orgBN                 :identifier  ?orgId             ;
+                                                      :label       ?organizationName  .
+      ?id  :license            ?licenseBN             .
+                               ?licenseBN             :identifier  ?licenseId     ;
+                                                      :label       ?licenseLabel  .
+      ?id  :mType              ?mTypeBN               .
+                               ?mTypeBN               :identifier  ?mTypeId     ;
+                                                      :label       ?mTypeLabel  .
+      ?id  :eType              ?eTypeBN               .
+                               ?eTypeBN               :identifier  ?eTypeId     ;
+                                                      :label       ?eTypeLabel  .
+      ?id  :subjectAge         ?subjectAgeBN          .
+                               ?subjectAgeBN          :value       ?subjectAgeValue   ;
+                                                      :unit        ?subjectAgeUnit    ;
+                                                      :period      ?subjectAgePeriod  ;
+                                                      :label       ?subjectAgeLabel   .
+      ?id  :neuronDensity      ?neuronDensityBN       .
+                               ?neuronDensityBN       :value       ?neuronDensityValue   ;
+                                                      :unit        ?neuronDensityUnit    ;
+                                                      :nValue      ?neuronDensityNValue  ;
+                                                      :label       ?neuronDensityLabel   .
+      ?id  :layerThickness     ?thicknessBN           .
+                               ?thicknessBN           :value       ?thicknessValue   ;
+                                                      :unit        ?thicknessUnit    ;
+                                                      :nValue      ?thicknessNValue  ;
+                                                      :label       ?thicknessLabel   .
+      ?id  :boutonDensity      ?boutonDensityBN       .
+                               ?boutonDensityBN       :value       ?boutonDensityValue  ;
+                                                      :unit        ?boutonDensityUnit   ;
+                                                      :label       ?boutonDensityLabel  .
+      ?id  :circuitType        ?circuitType           ;
+           :circuitBase        ?circuitBaseUrlStr        ;
+           :circuitConfigPath  ?circuitConfigPathUrlStr  .
+    } WHERE {
+      BIND({resource_id} as ?id) .
+
+      ?id  a  ?type  .
+
+      # exclude schema:Dataset and prov:Entity types to avoid noise
+      FILTER (?type != schema:Dataset)
+      FILTER (?type != prov:Entity)
+
+      # for Traces, only consider ones that have the nwb encoding format
+      FILTER NOT EXISTS {
+        ?id  a                                            nsg:Trace       ;
+             schema:distribution / schema:encodingFormat  ?encodingFormat .
+        FILTER (?encodingFormat != "application/nwb")
+      }
+
+      ?id  nxv:createdAt   ?createdAt;
+           nxv:createdBy   ?createdBy;
+           nxv:updatedAt   ?updatedAt;
+           nxv:updatedBy   ?updatedBy;
+           nxv:deprecated  ?deprecated;
+           nxv:self        ?self;
+           nxv:project     ?projectId  .
+                           ?projectId  nxv:organizationLabel  ?orgLabel  ;
+                                       nxv:label              ?projLabel .
+      BIND( CONCAT( STR(?orgLabel), STR("/"), STR(?projLabel) ) as ?projectLabel ) .
+      BIND( BNODE() AS ?projectBN ) .
+
+      OPTIONAL {
+        ?id  schema:description   ?description .
+      } .
+
+      OPTIONAL {
+        ?id  schema:name  ?name .
+      } .
+
+      OPTIONAL {
+        ?id  rdfs:label ?name .
+      } .
+
+      OPTIONAL {
+        ?id skos:prefLabel  ?name  .
+      } .
+
+      OPTIONAL {
+        ?id  schema:license  ?licenseId .
+        OPTIONAL {
+          ?licenseId  schema:name  ?licenseLabel .
+        } .
+        BIND( BNODE() AS ?licenseBN ) .
+      } .
+
+      OPTIONAL {
+        ?id  nsg:brainLocation / nsg:brainRegion  ?brainRegionId .
+        OPTIONAL {
+          ?brainRegionId  rdfs:label  ?brainRegionLabel .
+        }
+        BIND( BNODE() AS ?brainRegionBN ) .
+      } .
+
+      OPTIONAL {
+        ?id  nsg:subject / nsg:species ?speciesId .
+        OPTIONAL {
+          ?speciesId  rdfs:label  ?speciesLabel .
+        } .
+        BIND( BNODE() AS ?speciesBN ) .
+      } .
+
+      OPTIONAL {
+        ?id  schema:distribution / schema:name                        ?distributionName           ;
+             schema:distribution / schema:encodingFormat              ?distributionEncodingFormat ;
+             schema:distribution / schema:contentSize / schema:value  ?distributionContentSize    .
+        BIND( BNODE() AS ?distributionBN ) .
+      } .
+
+      OPTIONAL {
+        ?id  nsg:contribution / prov:agent  ?personId  .
+                                            ?personId  a  schema:Person .
+        OPTIONAL {
+          ?personId  schema:givenName  ?givenName .
+        } .
+        OPTIONAL {
+          ?personId schema:familyName  ?familyName .
+        } .
+        BIND(
+          IF(
+            BOUND(?givenName) && BOUND(?familyName),
+            CONCAT(STR(?givenName)," ", STR(?familyName)),
+            IF(
+              BOUND(?givenName),
+              ?givenName,
+              ?familyName)
+          ) AS ?personName ) .
+        BIND( BNODE() AS ?personBN ) .
+      } .
+
+      OPTIONAL {
+        ?id  nsg:contribution / prov:agent  ?orgId  .
+                                            ?orgId  a  schema:Organization .
+        OPTIONAL {
+          ?orgId  schema:name  ?organizationName .
+        } .
+        BIND( BNODE() AS ?orgBN ) .
+      } .
+
+      OPTIONAL {
+        ?id  nsg:annotation / nsg:hasBody  ?mTypeId  .
+                                           ?mTypeId  a  nsg:MType .
+        OPTIONAL {
+          ?mTypeId  rdfs:label  ?mTypeLabel .
+        }
+        BIND( BNODE() AS ?mTypeBN ) .
+      } .
+
+      OPTIONAL {
+        ?id  nsg:annotation / nsg:hasBody  ?eTypeId  .
+                                           ?eTypeId  a  nsg:EType .
+        OPTIONAL {
+          ?eTypeId  rdfs:label  ?eTypeLabel .
+        }
+        BIND( BNODE() AS ?eTypeBN ) .
+      } .
+
+      OPTIONAL {
+        ?id  nsg:subject / nsg:age / schema:value     ?subjectAgeValue   ;
+             nsg:subject / nsg:age / schema:unitCode  ?subjectAgeUnit    ;
+             nsg:subject / nsg:age / nsg:period       ?subjectAgePeriod  .
+        BIND(
+          CONCAT(
+            STR(?subjectAgeValue), " ",
+            STR(?subjectAgeUnit), " ",
+            STR(?subjectAgePeriod)
+          ) as ?subjectAgeLabel ) .
+        BIND( BNODE() as ?subjectAgeBN ) .
+      } .
+
+      OPTIONAL {
+        ?id  a           nsg:NeuronDensity ;
+             nsg:series  ?meanSeries       .
+                         ?meanSeries  nsg:statistic    ?stat               ;
+                                      schema:value     ?neuronDensityValue ;
+                                      schema:unitCode  ?neuronDensityUnit  .
+        ?id  nsg:series  ?nSeries  .
+                         ?nSeries  nsg:statistic  "N" ;
+                                   schema:value   ?neuronDensityNValue .
+        FILTER ( ?stat = "mean" || ?stat = "data point" ) .
+        BIND(
+          CONCAT(
+            STR(?neuronDensityValue), " ",
+            STR(?neuronDensityUnit), " (N = ",
+            STR(?neuronDensityNValue), ")"
+          ) as ?neuronDensityLabel
+        ) .
+        BIND( BNODE() as ?neuronDensityBN ) .
+      } .
+
+      OPTIONAL {
+        ?id  a           nsg:LayerThickness ;
+             nsg:series  ?meanSeries        .
+                         ?meanSeries  nsg:statistic    "mean"          ;
+                                      schema:value     ?thicknessValue ;
+                                      schema:unitCode  ?thicknessUnit  .
+        ?id  nsg:series  ?nSeries  .
+                         ?nSeries  nsg:statistic  "N"              ;
+                                   schema:value   ?thicknessNValue .
+        BIND(
+          CONCAT(
+            STR(?thicknessValue), " ",
+            STR(?thicknessUnit), " (N = ",
+            STR(?thicknessNValue), ")"
+          ) as ?thicknessLabel
+        ) .
+        BIND( BNODE() as ?thicknessBN ) .
+      } .
+
+      OPTIONAL {
+        ?id  a            nsg:BoutonDensity   ;
+             nsg:density  ?boutonDensityMean  .
+                          ?boutonDensityMean  nsg:statistic    "mean"              ;
+                                              schema:value     ?boutonDensityValue ;
+                                              schema:unitCode  ?boutonDensityUnit  .
+        BIND(
+          CONCAT(
+            STR(?boutonDensityValue), " ",
+            STR(?boutonDensityUnit)
+          ) as ?boutonDensityLabel
+        ) .
+        BIND( BNODE() as ?boutonDensityBN ) .
+      } .
+
+      OPTIONAL {
+        ?id  a  nsg:DetailedCircuit .
+
+        OPTIONAL {
+          GRAPH ?id {
+            ?id  ?circuitTP  ?circuitType .
+            FILTER ( STRENDS(STR(?circuitTP), "/circuitType") ) .
+          } .
+        } .
+
+        OPTIONAL {
+          GRAPH ?id {
+            ?id  ?circuitBP  ?circuitBase  .
+                             ?circuitBase  a           schema:DataDownload  ;
+                                           schema:url  ?circuitBaseUrl      .
+            FILTER ( STRENDS(STR(?circuitBP), "/circuitBase") ) .
+            BIND( STR(?circuitBaseUrl) as ?circuitBaseUrlStr ) .
+          } .
+        } .
+
+        OPTIONAL {
+          GRAPH ?id {
+            ?id  ?circuitCP  ?circuitConfigPath  .
+                             ?circuitConfigPath  a           schema:DataDownload   ;
+                                                 schema:url  ?circuitConfigPathUrl .
+            FILTER ( STRENDS(STR(?circuitCP), "/circuitConfigPath") ) .
+            BIND( STR(?circuitConfigPathUrl) as ?circuitConfigPathUrlStr ) .
+          } .
+        } .
+
+      } .
+    }
+
+  resource-types.json: |-
+    [
+      "https://neuroshapes.org/Analysis",
+      "https://neuroshapes.org/AnalysisReport",
+      "https://neuroshapes.org/AstrocyteMorphology",
+      "https://neuroshapes.org/BoutonDensity",
+      "https://neuroshapes.org/BrainAtlasRelease",
+      "https://neuroshapes.org/BrainAtlasSpatialReferenceSystem",
+      "https://neuroshapes.org/BrainParcellationDataLayer",
+      "https://neuroshapes.org/BrainParcellationMesh",
+      "https://neuroshapes.org/BrainTemplateDataLayer",
+      "https://neuroshapes.org/CampaignAnalysis",
+      "https://neuroshapes.org/Cell",
+      "https://neuroshapes.org/CellPositions",
+      "https://neuroshapes.org/Circuit",
+      "https://neuroshapes.org/CircuitCellProperties",
+      "https://neuroshapes.org/Configuration",
+      "https://neuroshapes.org/DetailedCircuit",
+      "https://neuroshapes.org/EdgeCollection",
+      "https://neuroshapes.org/EModel",
+      "https://neuroshapes.org/EModelScript",
+      "https://neuroshapes.org/ImageStack",
+      "https://neuroshapes.org/GeneExpressionVolumetricDataLayer",
+      "https://neuroshapes.org/GeneProteinMgi",
+      "https://neuroshapes.org/GliaCellDensity",
+      "https://neuroshapes.org/ImageStack",
+      "https://neuroshapes.org/InVitroSliceWholeCellPatchClampElectrophysiologyTrace",
+      "https://neuroshapes.org/LayerThickness",
+      "https://neuroshapes.org/MEModel",
+      "https://neuroshapes.org/MEModelRelease",
+      "https://neuroshapes.org/MicrogliaMorphology",
+      "https://neuroshapes.org/MitochondriaMorphology",
+      "https://neuroshapes.org/ModelReleaseIndex",
+      "https://neuroshapes.org/MorphologyDiversification",
+      "https://neuroshapes.org/MorphologyMesh",
+      "https://neuroshapes.org/MorphologyRelease",
+      "https://neuroshapes.org/NeuronCount",
+      "https://neuroshapes.org/NeuronDensity",
+      "https://neuroshapes.org/NeuronMorphology",
+      "https://neuroshapes.org/NISSLImageDataLayer",
+      "https://neuroshapes.org/NodeCollection",
+      "https://neuroshapes.org/Organization",
+      "https://neuroshapes.org/PatchedCell",
+      "https://neuroshapes.org/Person",
+      "https://neuroshapes.org/ProteinConcentration",
+      "https://neuroshapes.org/PSPamplitude",
+      "https://neuroshapes.org/ReconstructedCell",
+      "https://neuroshapes.org/ReconstructedPatchedCell",
+      "https://neuroshapes.org/Simulation",
+      "https://neuroshapes.org/SimulationCampaign",
+      "https://neuroshapes.org/SimWriterConfiguration",
+      "https://neuroshapes.org/SingleCellSimulationTrace",
+      "https://neuroshapes.org/SoftwareAgent",
+      "https://neuroshapes.org/SubCellularModel",
+      "https://neuroshapes.org/SubCellularModelScript",
+      "https://neuroshapes.org/Subject",
+      "https://neuroshapes.org/SynapseRelease",
+      "https://neuroshapes.org/SynapticConnectivity",
+      "https://neuroshapes.org/Target",
+      "https://neuroshapes.org/Trace",
+      "https://neuroshapes.org/TraceCollection",
+      "https://neuroshapes.org/VariableReport",
+      "https://neuroshapes.org/VasculatureGraphModel",
+      "https://neuroshapes.org/WholeBrainVasculature",
+      "https://neuroshapes.org/WorkflowExecution"
+    ]

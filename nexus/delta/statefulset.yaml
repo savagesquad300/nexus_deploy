@@ -1,0 +1,180 @@
+# adding a comment
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: delta
+  namespace: nexus18-research
+  labels:
+    app: delta
+spec:
+  serviceName: delta-headless
+  replicas: 1
+  selector:
+    matchLabels:
+      app: delta
+  template:
+    metadata:
+      namespace: nexus18-research
+      labels:
+        app: delta
+    spec:
+      containers:
+        - name: delta
+          image: bluebrain/nexus-delta:1.8.0
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: data-delta
+              mountPath: /opt/binaries
+            - name: delta-search-config
+              mountPath: /opt/search-config
+            - name: delta-cacerts
+              mountPath: /opt/cacerts
+              subPath: cacerts
+            # - name: delta-config
+            #   mountPath: /opt/appconf
+          env:
+            - name: BIND_INTERFACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: JAVA_OPTS
+              value: "-Xss2m -Xms8g -Xmx8g"
+            - name: DELTA_PLUGINS
+              value: "/opt/docker/plugins/"
+            # - name: DELTA_EXTERNAL_CONF
+            #   value: "/opt/appconf/delta.conf"
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: delta
+                  key: delta-postgres-password
+            - name: KAMON_ENABLED
+              value: "true"
+            - name: KAMON_JAEGER_ENABLED
+              value: "false"
+            - name: ENCRYPTION_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: delta
+                  key: storage-password
+            - name: ENCRYPTION_SALT
+              valueFrom:
+                secretKeyRef:
+                  name: delta
+                  key: storage-salt
+            - name: SA_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: delta
+                  key: service-account-token
+            - name: SA_REALM
+              valueFrom:
+                secretKeyRef:
+                  name: delta
+                  key: service-account-realm
+            - name: SA_SUBJECT
+              valueFrom:
+                secretKeyRef:
+                  name: delta
+                  key: service-account-subject
+            - name: ELASTICSEARCH_USERNAME
+              value: "nexus-user"
+            - name: ELASTICSEARCH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: delta
+                  key: elasticsearch-password
+            - name: JIRA_CONSUMER_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jira
+                  key: consumer-key
+            - name: JIRA_CONSUMER_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: jira
+                  key: consumer-secret
+            - name: JIRA_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jira
+                  key: private-key
+          workingDir: "/tmp"
+          command:
+            - "/bin/bash"
+            - "-c"
+            - >
+              /opt/docker/bin/delta-app
+              -Dakka.http.client.parsing.max-content-length="50g"
+              -Dakka.http.host-connection-pool.max-open-requests=128
+              -Dakka.http.host-connection-pool.response-entity-subscription-timeout="15.seconds"
+              -Dakka.http.server.parsing.max-content-length="2MiB"
+              -Dapp.cluster.remote-interface="$BIND_INTERFACE.delta-headless.nexus18-research.svc"
+              -Dapp.cluster.seeds="delta-0.delta-headless.nexus18-research.svc:25520"
+              -Dapp.defaults.database.access.host="postgresql.nexus18-research.svc"
+              -Dapp.defaults.database.access.port="5432"
+              -Dapp.defaults.database.name="postgres"
+              -Dapp.defaults.database.username="postgres"
+              -Dapp.defaults.database.password="$POSTGRES_PASSWORD"
+              -Dapp.database.tables-autocreate="true"
+              -Dapp.encryption.password="$ENCRYPTION_PASSWORD"
+              -Dapp.encryption.salt="$ENCRYPTION_SALT"
+              -Dapp.fusion.enable-redirects="true"
+              -Dapp.http.base-uri="https://nexus.camh.ca/researchkg/v1"
+              -Dapp.http.interface="$BIND_INTERFACE"
+              -Dapp.monitoring.trace.sampler="never"
+              -Dapp.projects.deletion.enabled="true"
+              -Dapp.service-account.subject="$SA_SUBJECT"
+              -Dapp.service-account.realm="$SA_REALM"
+              -Dplugins.blazegraph.base="http://blazegraph.nexus18-research.svc:9999/blazegraph"
+              -Dplugins.blazegraph.enabled="true"
+              -Dplugins.elasticsearch.base="https://elasticsearch.nexus18-research.svc:9200"
+              -Dplugins.elasticsearch.enabled="true"
+              -Dplugins.elasticsearch.credentials.username="$ELASTICSEARCH_USERNAME"
+              -Dplugins.elasticsearch.credentials.password="$ELASTICSEARCH_PASSWORD"
+              -Dplugins.graph-analytics.enabled="true"
+              -Dplugins.jira.enabled="false"
+              -Dplugins.jira.consumer-key="$JIRA_CONSUMER_KEY"
+              -Dplugins.jira.secret="$JIRA_CONSUMER_SECRET"
+              -Dplugins.jira.private-key="$JIRA_PRIVATE_KEY"
+              -Dplugins.project-deletion.enabled="false"
+              -Dplugins.search.enabled="false"
+              -Dplugins.storage.storages.remote-disk.default-credentials="$SA_TOKEN"
+              -Djavax.net.ssl.trustStore="/opt/cacerts"
+              -Djavax.net.ssl.trustStorePassword=""
+          ports:
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+            - containerPort: 9095
+              name: prometheus
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 8000m
+              memory: 14Gi
+            limits:
+              cpu: 8000m
+              memory: 14Gi
+          livenessProbe:
+            tcpSocket:
+              port: http
+            failureThreshold: 5
+            successThreshold: 1
+            initialDelaySeconds: 60
+            periodSeconds: 5
+            timeoutSeconds: 5
+      volumes:
+        - name: data-delta
+          persistentVolumeClaim:
+            claimName: data-delta
+        - name: delta-search-config
+          configMap:
+            name: delta-search-config
+        - name: delta-cacerts
+          configMap:
+            name: delta-cacerts
+        # - name: delta-config
+        #   configMap:
+        #     name: delta-config
+      terminationGracePeriodSeconds: 30
