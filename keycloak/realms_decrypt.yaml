@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: keycloak-realms
+    namespace: keycloak
+data:
+    serviceaccounts.json: |-
+        {
+          "enabled": true,
+          "realm": "serviceaccounts",
+          "accessTokenLifespan": 86313600,
+          "ssoSessionIdleTimeout": 86313600,
+          "ssoSessionMaxLifespan": 86313600,
+          "offlineSessionIdleTimeout": 86313600,
+          "clients": [
+            {
+              "clientId": "nexus-sa",
+              "enabled": true,
+              "clientAuthenticatorType": "client-secret",
+              "secret": "cTliSDlhOFlRVm5zZUtrTg==",
+              "bearerOnly": false,
+              "consentRequired": false,
+              "standardFlowEnabled": false,
+              "implicitFlowEnabled": false,
+              "directAccessGrantsEnabled": false,
+              "serviceAccountsEnabled": true,
+              "publicClient": false,
+              "protocol": "openid-connect",
+              "fullScopeAllowed": true,
+              "protocolMappers": [
+                {
+                  "name": "Groups",
+                  "protocol": "openid-connect",
+                  "protocolMapper": "oidc-hardcoded-claim-mapper",
+                  "consentRequired": false,
+                  "config": {
+                    "claim.name": "groups",
+                    "claim.value": "",
+                    "userinfo.token.claim": "true",
+                    "id.token.claim": "false",
+                    "access.token.claim": "true",
+                    "jsonType.label": "String"
+                  }
+                }
+              ]
+            }
+          ]
+        }
